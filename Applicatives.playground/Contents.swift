@@ -2,7 +2,7 @@
 import Foundation
 
 
-public func pure<A,B>(f: A -> B) -> ((A -> B) -> ()) -> () {
+public func pure<A>(f: A) -> (A -> ()) -> () {
     return { $0(f) }
 }
 
