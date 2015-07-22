@@ -6,6 +6,8 @@ When I saw that [Continuation Passing Style](https://en.wikipedia.org/wiki/Conti
 
 ![Playground Screenshot](screenshot.png)
 
+See my [blog post](https://fillyerwellies.wordpress.com/2015/07/16/asynchronous-swift/) on this.
+
 ### Watch out
 
 The results of `dispatch_async()` are never seen in a playground. Comment out this line so that `async()` calls its completion closure synchronously, and you can see the results in the console.
