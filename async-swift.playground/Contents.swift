@@ -1,5 +1,3 @@
-//: Playground - noun: a place where people can play
-
 import Foundation
 
 struct Future<Value> {
@@ -48,7 +46,7 @@ func doAsync(c: ()->()) {
 }
 
 func async<T>(t: T) -> Future<T> {
-    return Future() { gett in doAsync { gett(t) } }
+    return Future() { get in doAsync { get(t) } }
 }
 
 let runAsync = false
@@ -63,3 +61,25 @@ pure(calc(2))
 pure(calc(2)) <*> async(5)
 calc(2) <%> async(5)
 (calc(2) <%> async(5) <*> async(7)).get { print($0) }
+
+func syncFoo(a: Int) -> Int {
+    return a+1
+}
+
+func syncBar(b: Int) -> Int {
+    return b*2
+}
+
+func asyncFoo(a: Int) -> Future<Int> {
+    return async(syncFoo(a))
+}
+
+func asyncBar(b: Int) -> Future<Int> {
+    return async(syncBar(b))
+}
+
+(asyncFoo(2) >>= asyncBar).get { print($0) }
+
+let sequence = [ asyncFoo, asyncBar, asyncFoo, asyncBar ]
+(sequence.reduce(asyncFoo(2), combine: >>=)).get { print($0) }
+
